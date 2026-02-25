@@ -115,7 +115,7 @@ function App() {
     formData.append('role', role)
 
     try {
-      const response = await fetch('http://localhost:8080/upload', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload`, {
         method: 'POST',
         body: formData,
       })
