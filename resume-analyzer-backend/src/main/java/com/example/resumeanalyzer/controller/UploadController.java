@@ -30,9 +30,10 @@ public class UploadController {
             text = stripper.getText(document);
             document.close();
         } catch (Exception e) {
-            response.setError("Failed to parse PDF file: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(response);
-        }
+    e.printStackTrace();
+    response.setError("ERROR: " + e.toString());
+    return ResponseEntity.internalServerError().body(response);
+}
 
         if (text == null || text.trim().isEmpty()) {
             response.setError("Could not extract any text from the PDF.");
