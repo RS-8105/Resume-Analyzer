@@ -11,22 +11,19 @@ import java.util.Map;
 @Service
 public class NlpService {
 
+    @Value("${NLP_URL}")
+    private String nlpUrl;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public AnalysisResponse analyzeResume(String resumeText, String role) {
+    public AnalysisResponse analyzeResume(String text, String role) {
 
-        String url = "http://localhost:8000/analyze";
+        String url = nlpUrl + "/analyze";
 
         Map<String, String> request = new HashMap<>();
-        request.put("resume_text", resumeText);
+        request.put("resume_text", text);
         request.put("role", role);
 
-        try {
-            return restTemplate.postForObject(url, request, AnalysisResponse.class);
-        } catch (RestClientException e) {
-            AnalysisResponse errorResponse = new AnalysisResponse();
-            errorResponse.setError("Failed to connect to Python NLP service: " + e.getMessage());
-            return errorResponse;
-        }
+        return restTemplate.postForObject(url, request, AnalysisResponse.class);
     }
 }
